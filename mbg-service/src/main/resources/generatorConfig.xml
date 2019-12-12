@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="jdbc.properties"/>
+
+    <!-- 环境信息 -->
+    <context id="myMbg" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <!-- 标记数据库对象名的符号，MYSQL默认是`反引号 -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 自定义注释生成器 -->
+        <commentGenerator type="com.lw.mbgcomment.comment.MyCommentGenerator">
+            <property name="author" value="lw"/>
+            <property name="dateFormat" value="yyyy/MM/dd HH:mm:ss"/>
+        </commentGenerator>
+
+        <!-- jdbc配置 -->
+        <jdbcConnection driverClass="${jdbc_driver}" connectionURL="${jdbc_url}" userId="${jdbc_username}" password="${jdbc_password}">
+            <property name="useInformationSchema" value="true" />
+        </jdbcConnection>
+
+        <!-- java类型处理 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成Entity类存放位置 -->
+        <!-- 注意:通过java代码GeneratorClient运行main方法时，targetProject="mbg-service/src/main/java" -->
+        <javaModelGenerator targetPackage="com.lw.mbgservice.entity" targetProject="src/main/java">
+            <!-- 是否允许建立子包（对应MySql的scheme）,默认为false -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成映射文件存放位置 -->
+        <!-- 注意:通过java代码GeneratorClient运行main方法时，targetProject="mbg-service/src/main/java" -->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成Dao类存放位置 -->
+        <!-- 注意:通过java代码GeneratorClient运行main方法时，targetProject="mbg-service/src/main/java" -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lw.mbgservice.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 设置数据库的表名和实体类名 -->
+        <table tableName="c_bankcard_agreement" domainObjectName="BankcardAgreementEntity"/>
+        <table tableName="b_phone_white_pro" domainObjectName="PhoneWhitePro"/>
+    </context>
+
+</generatorConfiguration>
